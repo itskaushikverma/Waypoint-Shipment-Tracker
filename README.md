@@ -152,7 +152,6 @@ Send the access token as `Authorization: Bearer <token>`.
 ---
 
 <!-- AUTHOR:START -->
-
 ## 👨‍💻 Author
 
 **Kaushik Verma**
