@@ -26,7 +26,7 @@ connectDB();
 
 app.use('/api', router);
 
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   return res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 

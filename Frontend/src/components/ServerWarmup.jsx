@@ -1,37 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Logo from './Logo';
 import LoaderAnimation from './LoaderAnimation';
+import { useHealthQuery } from '../redux/api';
 
-const HEALTH_URL = `${String(import.meta.env.VITE_API_URL).replace(/\/api\/?$/, '')}/health`;
 const RETRY_MS = 3000;
+const message = 'Waking up the server...';
 
 export default function ServerWarmup({ children }) {
-  const [ready, setReady] = useState(false);
-  const [message, setMessage] = useState('Waking up the server...');
+  const { isSuccess: ready, isError, isFetching, refetch } = useHealthQuery();
 
   useEffect(() => {
-    let cancelled = false;
-    let retryId;
+    if (!isError || isFetching || ready) return undefined;
 
-    const ping = async () => {
-      try {
-        const response = await fetch(HEALTH_URL, { cache: 'no-store' });
-        if (!response.ok) throw new Error('Server is not ready');
-        if (!cancelled) setReady(true);
-      } catch {
-        if (cancelled) return;
-        setMessage('Waking up the server...');
-        retryId = window.setTimeout(ping, RETRY_MS);
-      }
-    };
+    const retryId = window.setTimeout(() => {
+      refetch();
+    }, RETRY_MS);
 
-    ping();
-
-    return () => {
-      cancelled = true;
-      window.clearTimeout(retryId);
-    };
-  }, []);
+    return () => window.clearTimeout(retryId);
+  }, [isError, isFetching, ready, refetch]);
 
   if (ready) {
     return children;

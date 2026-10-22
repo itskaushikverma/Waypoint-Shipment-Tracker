@@ -16,6 +16,9 @@ export const shipmentApi = createApi({
     },
   }),
   endpoints: (builder) => ({
+    health: builder.query({
+      query: () => '/health',
+    }),
     login: builder.mutation({
       query: (body) => ({
         url: '/auth/login',
@@ -118,4 +121,5 @@ export const {
   useGetShipmentQuery,
   useAddShipmentMutation,
   useUpdateShipmentLocationMutation,
+  useHealthQuery,
 } = shipmentApi;
