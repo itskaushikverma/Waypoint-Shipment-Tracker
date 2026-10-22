@@ -14,13 +14,11 @@ export const signup = async (req, res) => {
     }
 
     if (await isDisposableEmail(email)) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          data: null,
-          message: 'Disposable email addresses are not allowed.',
-        });
+      return res.status(400).json({
+        success: false,
+        data: null,
+        message: 'Disposable email addresses are not allowed.',
+      });
     }
 
     const existing = await User.findOne({ email }).select('_id');

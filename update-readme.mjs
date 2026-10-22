@@ -13,7 +13,7 @@ function emailHref(email) {
 function badge(href, label, color, logo) {
   if (!href) return '';
   const src = `https://img.shields.io/badge/${encodeURIComponent(label)}-${color}?style=for-the-badge&logo=${logo}&logoColor=white`;
-  return `  <a href="${href}"><img src="${src}" alt="${label}" /></a>`;
+  return `  <a href="${href}" target="_blank" rel="noopener noreferrer"><img src="${src}" alt="${label}" /></a>`;
 }
 
 function renderAuthor(data) {
@@ -34,7 +34,7 @@ function renderAuthor(data) {
 
 **${name}**
 
-<p align="center">
+<p align="left">
 ${badges}
 </p>
 ${AUTHOR_END}`;
