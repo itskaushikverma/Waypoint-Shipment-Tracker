@@ -1,95 +1,174 @@
-import { useState } from "react"
-import { useForm, Controller } from "react-hook-form"
-import { motion } from "framer-motion"
-import { Input } from "./ui/input"
-import { Button } from "./ui/button"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "./ui/select"
-import { Label } from "./ui/label"
-import { Card, CardContent, CardHeader, CardTitle } from "./ui/card"
-import BackgroundAnimation from "./BackgroundAnimation"
+import { useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './ui/select';
+import { Label } from './ui/label';
+import { useToast } from 'react-toast-kit-js';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { useAddShipmentMutation } from '../redux/api';
 
-export default function AddShipmentForm({ onSubmit, handleShipmentAdded }) {
-    const { control, handleSubmit, reset, formState: { errors } } = useForm()
-    const [isSubmitting, setIsSubmitting] = useState(false)
+export default function AddShipmentForm({ handleShipmentAdded }) {
+  const [addShipment] = useAddShipmentMutation();
+  const {
+    control,
+    register,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      containerId: '',
+      startLat: '',
+      startLng: '',
+      endLat: '',
+      endLng: '',
+      status: 'Pending',
+    },
+  });
+  const { error: showError } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleFormSubmit = async (data) => {
-        setIsSubmitting(true)
-        await onSubmit(data)
-        reset()
-        setIsSubmitting(false)
-        handleShipmentAdded()
+  const handleFormSubmit = async (data) => {
+    setIsSubmitting(true);
+    try {
+      await addShipment({
+        containerId: data.containerId,
+        startLocation: {
+          lat: data.startLat,
+          lng: data.startLng,
+        },
+        endLocation: {
+          lat: data.endLat,
+          lng: data.endLng,
+        },
+        status: data.status,
+      }).unwrap();
+      reset();
+      handleShipmentAdded();
+    } catch (error) {
+      showError(error?.data?.message || 'Request failed');
+    } finally {
+      setIsSubmitting(false);
     }
+  };
 
-    return (
-        <>
-            <BackgroundAnimation />
-            <Card className="w-full max-w-md mx-auto mt-8">
-                <CardHeader>
-                    <CardTitle>Add New Shipment</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-                            <Label htmlFor="containerId">Container ID</Label>
-                            <Controller
-                                name="containerId"
-                                control={control}
-                                rules={{ required: "Container ID is required" }}
-                                render={({ field }) => <Input {...field} placeholder="Container ID" />}
-                            />
-                            {errors.containerId && <p className="text-red-500 text-sm mt-1">{errors.containerId.message}</p>}
-                        </motion.div>
+  return (
+    <Card className="bg-background mx-auto w-full max-w-lg border shadow-sm">
+      <CardHeader className="space-y-1 px-6 pt-6">
+        <CardTitle className="text-lg font-semibold tracking-tight">Add shipment</CardTitle>
+        <CardDescription>Enter a numeric container ID, the route, and the status.</CardDescription>
+      </CardHeader>
+      <CardContent className="px-6 pb-6">
+        <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-5">
+          <div className="space-y-1.5">
+            <Label htmlFor="containerId">Container ID</Label>
+            <Input
+              id="containerId"
+              inputMode="numeric"
+              autoComplete="off"
+              placeholder="1234"
+              {...register('containerId', {
+                required: 'Container ID is required',
+                pattern: { value: /^\d+$/, message: 'Container ID must be a number' },
+              })}
+              onChange={(event) => {
+                setValue('containerId', event.target.value.replace(/\D/g, ''), {
+                  shouldValidate: true,
+                });
+              }}
+            />
+            {errors.containerId && (
+              <p className="text-destructive text-sm">{errors.containerId.message}</p>
+            )}
+          </div>
 
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}  >
-                            <Label>Starting Location</Label>
-                            <div className="grid grid-cols-2 gap-2">
-                                <Controller name="startLat" control={control} rules={{ required: "Latitude is required" }} render={({ field }) => <Input {...field} type="number" placeholder="Latitude" />} />
-                                <Controller name="startLng" control={control} rules={{ required: "Longitude is required" }} render={({ field }) => <Input {...field} type="number" placeholder="Longitude" />} />
-                            </div>
-                            {(errors.startLat || errors.startLng) && (
-                                <p className="text-red-500 text-sm mt-1">Both latitude and longitude are required</p>
-                            )}
-                        </motion.div>
+          <div className="space-y-3">
+            <p className="text-sm font-medium">Starting location</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="startLat">Latitude</Label>
+                <Input
+                  id="startLat"
+                  type="number"
+                  step="any"
+                  placeholder="Latitude"
+                  {...register('startLat')}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="startLng">Longitude</Label>
+                <Input
+                  id="startLng"
+                  type="number"
+                  step="any"
+                  placeholder="Longitude"
+                  {...register('startLng')}
+                />
+              </div>
+            </div>
+          </div>
 
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}   >
-                            <Label>Ending Location</Label>
-                            <div className="grid grid-cols-2 gap-2">
-                                <Controller name="endLat" control={control} rules={{ required: "Latitude is required" }} render={({ field }) => <Input {...field} type="number" placeholder="Latitude" />} />
-                                <Controller name="endLng" control={control} rules={{ required: "Longitude is required" }} render={({ field }) => <Input {...field} type="number" placeholder="Longitude" />} />
-                            </div>
-                            {(errors.endLat || errors.endLng) && (
-                                <p className="text-red-500 text-sm mt-1">Both latitude and longitude are required</p>
-                            )}
-                        </motion.div>
+          <div className="space-y-3">
+            <p className="text-sm font-medium">Ending location</p>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1.5">
+                <Label htmlFor="endLat">Latitude</Label>
+                <Input
+                  id="endLat"
+                  type="number"
+                  step="any"
+                  placeholder="Latitude"
+                  {...register('endLat')}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="endLng">Longitude</Label>
+                <Input
+                  id="endLng"
+                  type="number"
+                  step="any"
+                  placeholder="Longitude"
+                  {...register('endLng')}
+                />
+              </div>
+            </div>
+          </div>
 
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}  >
-                            <Label>Status</Label>
-                            <Controller name="status" control={control} rules={{ required: "Status is required" }} render={({ field }) => (
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select status" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectGroup>
-                                            <SelectItem value="Pending">Pending</SelectItem>
-                                            <SelectItem value="In Transit">In Transit</SelectItem>
-                                        </SelectGroup>
-                                    </SelectContent>
-                                </Select>
-                            )}
-                            />
-                            {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status.message}</p>}
-                        </motion.div>
+          <div className="space-y-1.5">
+            <Label>Status</Label>
+            <Controller
+              name="status"
+              control={control}
+              render={({ field }) => (
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="Pending">Pending</SelectItem>
+                      <SelectItem value="In Transit">In Transit</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+          </div>
 
-                        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}       >
-                            <Button type="submit" className="w-full" disabled={isSubmitting}>
-                                {isSubmitting ? "Adding Shipment..." : "Add Shipment"}
-                            </Button>
-                        </motion.div>
-                    </form>
-                </CardContent>
-            </Card>
-        </>
-    )
+          <Button type="submit" className="w-full" disabled={isSubmitting}>
+            {isSubmitting ? 'Adding shipment...' : 'Add shipment'}
+          </Button>
+        </form>
+      </CardContent>
+    </Card>
+  );
 }
-

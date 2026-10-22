@@ -1,8 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import shipmentReducer from './shipmentSlice';
+import { shipmentApi } from './api';
+import authReducer from './authSlice';
 
 const store = configureStore({
-    reducer: { shipment: shipmentReducer }
+  reducer: {
+    auth: authReducer,
+    [shipmentApi.reducerPath]: shipmentApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(shipmentApi.middleware),
 });
 
 export default store;

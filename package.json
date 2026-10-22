@@ -1,0 +1,16 @@
+{
+  "name": "waypoint",
+  "version": "1.0.0",
+  "description": "Waypoint Shipment Tracker",
+  "scripts": {
+    "lint": "npm run lint --prefix frontend && npm run lint --prefix backend",
+    "format": "prettier --write .",
+    "check": "npm run lint && npm run format",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "prettier": "^3.8.3",
+    "prettier-plugin-tailwindcss": "^0.8.1"
+  }
+}
