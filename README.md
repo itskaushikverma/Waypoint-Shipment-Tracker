@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="frontend/public/logo.svg" width="72" alt="Waypoint Shipment Tracker" />
+  <img src="docs/logo.png" width="72" height="72" alt="Waypoint Shipment Tracker" />
 </p>
 
 <h1 align="center">Waypoint Shipment Tracker</h1>
