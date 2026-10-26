@@ -1,5 +1,4 @@
-
-name: Update README links
+name: CI
 
 on:
   push:
@@ -12,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: update-readme-${{ github.ref }}
+  group: ci-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -28,10 +27,10 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: '20'
 
       - name: Run script
-        run: node update-readme.mjs
+        run: node ci.js
 
       - name: Commit and push
         run: |
