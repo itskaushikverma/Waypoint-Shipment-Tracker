@@ -1,5 +1,7 @@
 <center>
-  <img src="./Frontend/public/logo.svg" alt="Waypoint Shipment Tracker" width="180" height="auto" />
+  <p align="center" style="text-align: center">
+    <img src="./Frontend/public/logo.svg" alt="Waypoint Shipment Tracker" width="180" />
+  </p>
   <h1 align="center" style="text-align: center">Waypoint Shipment Tracker</h1>
   <p align="center" style="text-align: center">
     A full-stack shipment tracker built with React, Vite, and Express — sign in, log a container route, update its location, and open the trip on a map.
@@ -12,7 +14,7 @@
     <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />
   </p>
 
- <h4>
+  <h4 align="center" style="text-align: center">
     <a href="https://waypoint-shipment-tracker.vercel.app/" target="_blank" rel="noopener noreferrer">🚀 Live Demo</a>
     <span> · </span>
     <a href="https://github.com/itskaushikverma/Waypoint-Shipment-Tracker" target="_blank" rel="noopener noreferrer">📁 Repository</a>
@@ -270,7 +272,6 @@ If you would like to contribute:
 <div align="center" style="margin: 0">
   <img src="https://github.com/itskaushikverma.png" alt="Developer" width="100" height="100" style="border-radius:50%; width:100px; height:100px; object-fit:cover; display:block; margin:0 auto"/>
   <h3 style="margin: 8px 0 4px">Kaushik Verma</h3>
-  <p style="margin: 0 0 8px"><em>Building AI tools that turn long documents into clear decisions.</em></p>
   <p style="margin: 0 0 8px">
     <a href="mailto:kaushikverma321@gmail.com"><img src="https://img.shields.io/badge/Email-kaushikverma321@gmail.com%40gmail.com-EA4335?style=flat-square&logo=gmail" alt="Email" /></a>
     <a href="https://www.kaushikverma.com"><img src="https://img.shields.io/badge/Website-https://www.kaushikverma.com-000000?style=flat-square&logo=vercel" alt="Portfolio" /></a>
