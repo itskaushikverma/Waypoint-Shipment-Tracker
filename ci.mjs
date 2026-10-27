@@ -10,7 +10,6 @@ function emailHref(email) {
   return email.startsWith('mailto:') ? email : `mailto:${email}`;
 }
 
-const TAGLINE = 'Building AI tools that turn long documents into clear decisions.';
 const STARS_REPO = 'itskaushikverma/Waypoint-Shipment-Tracker';
 
 function githubLogin(url) {
@@ -46,7 +45,6 @@ function renderAuthor(data) {
 <div align="center" style="margin: 0">
   <img src="https://github.com/${login}.png" alt="Developer" width="100" height="100" style="border-radius:50%; width:100px; height:100px; object-fit:cover; display:block; margin:0 auto"/>
   <h3 style="margin: 8px 0 4px">${name}</h3>
-  <p style="margin: 0 0 8px"><em>${TAGLINE}</em></p>
   <p style="margin: 0 0 8px">
     ${badges}
   </p>
