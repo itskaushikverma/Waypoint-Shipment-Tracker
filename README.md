@@ -272,7 +272,7 @@ If you would like to contribute:
   <h3 style="margin: 8px 0 4px">Kaushik Verma</h3>
   <p style="margin: 0 0 8px"><em>Building AI tools that turn long documents into clear decisions.</em></p>
   <p style="margin: 0 0 8px">
-    <a href="mailto:kaushikverma321@gmail.com"><img src="https://img.shields.io/badge/Email-kaushikverma321@gmail.com%40gmail.com-EA4335?style=flat-square&logo=gmail" alt="Email" /></a>
+    <a href="mailto:kaushikverma321@gmail.com"><img src="https://img.shields.io/badge/Email-kaushikverma321@gmail.com-EA4335?style=flat-square&logo=gmail" alt="Email" /></a>
     <a href="https://www.kaushikverma.com"><img src="https://img.shields.io/badge/Website-https://www.kaushikverma.com-000000?style=flat-square&logo=vercel" alt="Portfolio" /></a>
     <a href="https://github.com/itskaushikverma"><img src="https://img.shields.io/badge/GitHub-itskaushikverma-181717?style=flat-square&logo=github" alt="GitHub" /></a>
     <a href="https://www.linkedin.com/in/itskaushikverma"><img src="https://img.shields.io/badge/LinkedIn-https://www.linkedin.com/in/itskaushikverma-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
@@ -282,6 +282,6 @@ If you would like to contribute:
 </div>
 <div align="center" style="margin: 8px 0 0">
   <p style="margin: 0 0 4px">If you found this project helpful, please consider giving it a ⭐️</p>
-  <a href="https://github.com/itskaushikverma/frontend-mentor"><img src="https://img.shields.io/github/stars/itskaushikverma/frontend-mentor?style=social" alt="GitHub stars" /></a>
+  <a href="https://github.com/itskaushikverma/Waypoint-Shipment-Tracker"><img src="https://img.shields.io/github/stars/itskaushikverma/Waypoint-Shipment-Tracker?style=social" alt="GitHub stars" /></a>
 </div>
 <!-- AUTHOR:END -->
