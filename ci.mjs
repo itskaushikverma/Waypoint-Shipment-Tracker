@@ -10,33 +10,52 @@ function emailHref(email) {
   return email.startsWith('mailto:') ? email : `mailto:${email}`;
 }
 
-function badge(href, label, color, logo) {
-  if (!href) return '';
-  const src = `https://img.shields.io/badge/${encodeURIComponent(label)}-${color}?style=for-the-badge&logo=${logo}&logoColor=white`;
-  return `  <a href="${href}" target="_blank" rel="noopener noreferrer"><img src="${src}" alt="${label}" /></a>`;
+const TAGLINE = 'Building AI tools that turn long documents into clear decisions.';
+const STARS_REPO = 'itskaushikverma/Waypoint-Shipment-Tracker';
+
+function githubLogin(url) {
+  if (!url) return 'itskaushikverma';
+  try {
+    return new URL(url).pathname.split('/').filter(Boolean)[0] || 'itskaushikverma';
+  } catch {
+    return 'itskaushikverma';
+  }
+}
+
+function valueBadge(alt, label, message, color, logo, href) {
+  if (!href || !message) return '';
+  return `<a href="${href}"><img src="https://img.shields.io/badge/${label}-${message}-${color}?style=flat-square&logo=${logo}" alt="${alt}" /></a>`;
 }
 
 function renderAuthor(data) {
   const name = data.name?.trim() || FALLBACK_NAME;
+  const login = githubLogin(data.github);
+  const email = emailHref(data.email).replace(/^mailto:/, '');
   const badges = [
-    badge(data.portfolio, 'Portfolio', '114B5F', 'googlechrome'),
-    badge(data.github, 'GitHub', '181717', 'github'),
-    badge(data.linkedin, 'LinkedIn', '0A66C2', 'linkedin'),
-    badge(data.twitter ?? data.x, 'X', '111111', 'x'),
-    badge(data.instagram, 'Instagram', 'E4405F', 'instagram'),
-    badge(emailHref(data.email), 'Email', 'EA4335', 'gmail'),
+    valueBadge('Email', 'Email', email, 'EA4335', 'gmail', emailHref(data.email)),
+    valueBadge('Portfolio', 'Website', data.portfolio, '000000', 'vercel', data.portfolio),
+    valueBadge('GitHub', 'GitHub', login, '181717', 'github', data.github),
+    valueBadge('LinkedIn', 'LinkedIn', data.linkedin, '0077B5', 'linkedin', data.linkedin),
+    valueBadge('Twitter', 'Twitter', data.twitter ?? data.x, '1DA1F2', 'twitter', data.twitter ?? data.x),
   ]
     .filter(Boolean)
-    .join('&nbsp;&nbsp;\n');
+    .join('\n    ');
 
   return `${AUTHOR_START}
-## 👨‍💻 Author
-
-**${name}**
-
-<p align="left">
-${badges}
-</p>
+<h2 id="contact" style="margin: 12px 0 8px">👤 Author</h2>
+<div align="center" style="margin: 0">
+  <img src="https://github.com/${login}.png" alt="Developer" width="100" height="100" style="border-radius:50%; width:100px; height:100px; object-fit:cover; display:block; margin:0 auto"/>
+  <h3 style="margin: 8px 0 4px">${name}</h3>
+  <p style="margin: 0 0 8px"><em>${TAGLINE}</em></p>
+  <p style="margin: 0 0 8px">
+    ${badges}
+  </p>
+  <p style="margin: 0">Open to product feedback, collaboration, and thoughtful conversation.</p>
+</div>
+<div align="center" style="margin: 8px 0 0">
+  <p style="margin: 0 0 4px">If you found this project helpful, please consider giving it a ⭐️</p>
+  <a href="https://github.com/${STARS_REPO}"><img src="https://img.shields.io/github/stars/${STARS_REPO}?style=social" alt="GitHub stars" /></a>
+</div>
 ${AUTHOR_END}`;
 }
 

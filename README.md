@@ -1,49 +1,97 @@
-<p align="center">
-  <img src="docs/logo.png" width="72" height="72" alt="Waypoint Shipment Tracker" />
-</p>
+<center>
+  <img src="./Frontend/public/logo.svg" alt="Waypoint Shipment Tracker" width="180" height="auto" />
+  <h1 align="center" style="text-align: center">Waypoint Shipment Tracker</h1>
+  <p align="center" style="text-align: center">
+    A full-stack shipment tracker built with React, Vite, and Express — sign in, log a container route, update its location, and open the trip on a map.
+  </p>
+  <p align="center" style="display: flex; align-items: center; justify-content: center; gap:10px;">
+    <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React 19" />
+    <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite 8" />
+    <img src="https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4" />
+    <img src="https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white" alt="Express 5" />
+    <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />
+  </p>
 
-<h1 align="center">Waypoint Shipment Tracker</h1>
+ <h4>
+    <a href="https://waypoint-shipment-tracker.vercel.app/" target="_blank" rel="noopener noreferrer">🚀 Live Demo</a>
+    <span> · </span>
+    <a href="https://github.com/itskaushikverma/Waypoint-Shipment-Tracker" target="_blank" rel="noopener noreferrer">📁 Repository</a>
+  </h4>
+</center>
 
-<p align="center">
-  Sign in, log a container route, update its location, and open the trip on a map.
-</p>
+## 📚 Table of Contents
 
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React" />&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" alt="Vite" />&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white" alt="Express" />&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="https://img.shields.io/badge/JWT-Auth-000000?logo=jsonwebtokens&logoColor=white" alt="JWT" />
-</p>
+- [About the Project](#about-the-project)
+- [Screenshots](#screenshots)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Getting Started](#getting-started)
+- [Available Scripts](#available-scripts)
+- [API](#api)
+- [Project Structure](#project-structure)
+- [Deployment](#deployment)
+- [Contributing](#contributing)
+- [Contact](#contact)
 
----
+<a id="about-the-project"></a>
 
-## Preview
+## ✨ About the Project
 
-| Sign in                                                                | Create an account                                                              |
-| ---------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| <img src="docs/screenshots/login.png" alt="Waypoint sign in screen" /> | <img src="docs/screenshots/signup.png" alt="Waypoint create account screen" /> |
+Waypoint is a small shipment tracker with a React client and an Express API. After sign-in, the dashboard lists your shipments, lets you add a numeric container with a start and end point, and opens any trip on an OpenStreetMap view.
 
-After sign-in, the dashboard lists your shipments, lets you add a numeric container with a start and end point, and opens any trip on an OpenStreetMap view.
+Each JSON response uses the same envelope:
 
-## Features
+```json
+{ "success": true, "data": {}, "message": "Logged in successfully." }
+```
 
-- **Accounts** — Sign up, sign in, stay signed in with a JWT, and log out.
-- **Shipment list** — Sort by container ID, location, ETA, or status.
-- **Add shipment** — Enter a numeric container ID, coordinates, and status (`Pending` or `In Transit`).
-- **Live location** — Update the current point; ETA is recalculated toward the destination.
-- **Map** — Start, current position, destination, and remaining path on a map.
-- **Owned data** — Each user only sees and edits their own shipments.
+Failed requests use `"success": false` and `"data": null`.
 
-## Tech stack
+<a id="screenshots"></a>
 
-| Layer   | Tools                                                                               |
-| ------- | ----------------------------------------------------------------------------------- |
-| Web app | React 19, Vite, Redux Toolkit Query, React Router, Tailwind CSS, shadcn/ui, Leaflet |
-| API     | Node.js, Express 5, Mongoose, JWT, bcrypt                                           |
-| Data    | MongoDB                                                                             |
+## 📸 Screenshots
 
-## Architecture
+<table>
+  <tr>
+    <td width="50%" align="center"><img src="./docs/screenshots/login.png" alt="Waypoint sign in screen" width="420" /></td>
+    <td width="50%" align="center"><img src="./docs/screenshots/signup.png" alt="Waypoint create account screen" width="420" /></td>
+  </tr>
+</table>
+
+<a id="tech-stack"></a>
+
+## 🛠️ Tech Stack
+
+- ⚛️ React 19
+- ⚡ Vite 8
+- 🎨 Tailwind CSS 4
+- 🧩 shadcn/ui
+- 🗺️ Leaflet
+- 🔄 Redux Toolkit Query
+- 🧾 React Hook Form
+- ✅ Zod
+- 🚂 Express 5
+- 🍃 MongoDB + Mongoose
+- 🔐 JWT + bcrypt
+- 🧹 ESLint + Prettier
+
+<a id="features"></a>
+
+## 🌟 Features
+
+- Sign up, sign in, stay signed in with a JWT, and log out
+- Sort the shipment list by container ID, location, ETA, or status
+- Add a numeric container ID, coordinates, and a status (`Pending` or `In Transit`)
+- Update the current point and recalculate ETA toward the destination
+- Show the start, current position, destination, and remaining path on a map
+- Keep each account limited to its own shipments
+
+<a id="architecture"></a>
+
+## 🏗️ Architecture
+
+The React app sends a Bearer JWT to the Express API. Auth and shipment routes both read and write MongoDB.
 
 ```mermaid
 flowchart LR
@@ -54,29 +102,34 @@ flowchart LR
   Shipments --> Mongo
 ```
 
-Every JSON response uses the same envelope:
+<a id="getting-started"></a>
 
-```json
-{ "success": true, "data": {}, "message": "Logged in successfully." }
-```
+## 🚀 Getting Started
 
-Failed requests use `"success": false` and `"data": null`.
+### 📋 Prerequisites
 
-## Getting started
+- Node.js 20 or newer
+- npm
+- MongoDB
 
-Use **Node.js 20+** and a MongoDB database.
+### 💻 Run Locally
 
-### 1. Clone
-
-```bash
-git clone https://github.com/itskaushikverma/waypoint.git
-cd waypoint
-```
-
-### 2. API
+Clone the project:
 
 ```bash
-cd backend
+git clone https://github.com/itskaushikverma/Waypoint-Shipment-Tracker.git
+```
+
+Move into the project folder:
+
+```bash
+cd Waypoint-Shipment-Tracker
+```
+
+Start the API:
+
+```bash
+cd Backend
 cp .env.example .env
 npm install
 npm start
@@ -84,12 +137,10 @@ npm start
 
 The API listens on [http://localhost:5000](http://localhost:5000).
 
-### 3. Web app
-
-In a second terminal:
+In a second terminal, start the web app:
 
 ```bash
-cd frontend
+cd Frontend
 cp .env.example .env
 npm install
 npm run dev
@@ -97,9 +148,9 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173).
 
-## Environment
+### 🔐 Environment
 
-### `backend/.env`
+`Backend/.env`
 
 | Variable                     | Purpose                                                               |
 | ---------------------------- | --------------------------------------------------------------------- |
@@ -109,13 +160,38 @@ Open [http://localhost:5173](http://localhost:5173).
 | `FRONTEND_URL`               | Allowed browser origin, for example `http://localhost:5173`.          |
 | `CHECK_DISPOSABLE_EMAIL_URL` | Optional disposable-email check. Signup still works if this is unset. |
 
-### `frontend/.env`
+`Frontend/.env`
 
 | Variable       | Purpose                         |
 | -------------- | ------------------------------- |
 | `VITE_API_URL` | API base URL, including `/api`. |
 
-## API
+<a id="available-scripts"></a>
+
+## 📜 Available Scripts
+
+From the repository root:
+
+- `npm run lint` — lint the web app and the API
+- `npm run format` — format the repo with Prettier
+- `npm run check` — run lint, then format
+
+From `Frontend/`:
+
+- `npm run dev` — start the local development server
+- `npm run build` — build the app for production
+- `npm run preview` — preview the production build locally
+- `npm run lint` — run ESLint checks
+
+From `Backend/`:
+
+- `npm start` — start the API
+- `npm run lint` — run ESLint checks
+- `npm test` — run the Node test runner
+
+<a id="api"></a>
+
+## 🔌 API
 
 Send the access token as `Authorization: Bearer <token>`.
 
@@ -130,38 +206,82 @@ Send the access token as `Authorization: Bearer <token>`.
 | `GET`  | `/api/shipment/:id`                | Yes  |
 | `POST` | `/api/shipment/:id/updatelocation` | Yes  |
 | `GET`  | `/api/shipment/:id/eta`            | Yes  |
-| `GET`  | `/health`                          | No   |
+| `GET`  | `/api/health`                      | No   |
 
-## Project structure
+<a id="project-structure"></a>
+
+## 🧩 Project Structure
 
 ```text
 .
-├── backend/          Express API
+├── Backend/
+│   ├── config/
 │   ├── controllers/
 │   ├── models/
 │   ├── routes/
-│   └── utils/
-├── frontend/         React app
+│   ├── utils/
+│   └── index.js
+├── Frontend/
 │   └── src/
 │       ├── components/
 │       ├── pages/
-│       └── redux/
-└── docs/screenshots/
+│       ├── redux/
+│       ├── App.jsx
+│       └── main.jsx
+└── docs/
+    ├── logo.png
+    └── screenshots/
 ```
 
----
+<a id="deployment"></a>
+
+## 🌐 Deployment
+
+Build the web app:
+
+```bash
+cd Frontend
+npm run build
+npm run preview
+```
+
+Run the API with the production environment variables set in `Backend/.env`:
+
+```bash
+cd Backend
+npm start
+```
+
+<a id="contributing"></a>
+
+## 🤝 Contributing
+
+Contributions, issues, and feature suggestions are welcome.
+
+If you would like to contribute:
+
+- fork the repository
+- create a feature branch
+- commit your changes
+- open a pull request
 
 <!-- AUTHOR:START -->
-## 👨‍💻 Author
-
-**Kaushik Verma**
-
-<p align="left">
-  <a href="https://www.kaushikverma.com" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Portfolio-114B5F?style=for-the-badge&logo=googlechrome&logoColor=white" alt="Portfolio" /></a>&nbsp;&nbsp;
-  <a href="https://github.com/itskaushikverma" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub" /></a>&nbsp;&nbsp;
-  <a href="https://www.linkedin.com/in/itskaushikverma" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>&nbsp;&nbsp;
-  <a href="https://x.com/SilentK68296830" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/X-111111?style=for-the-badge&logo=x&logoColor=white" alt="X" /></a>&nbsp;&nbsp;
-  <a href="https://www.instagram.com/itskaushikverma" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram" /></a>&nbsp;&nbsp;
-  <a href="mailto:kaushikverma321@gmail.com" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white" alt="Email" /></a>
-</p>
+<h2 id="contact" style="margin: 12px 0 8px">👤 Author</h2>
+<div align="center" style="margin: 0">
+  <img src="https://github.com/itskaushikverma.png" alt="Developer" width="100" height="100" style="border-radius:50%; width:100px; height:100px; object-fit:cover; display:block; margin:0 auto"/>
+  <h3 style="margin: 8px 0 4px">Kaushik Verma</h3>
+  <p style="margin: 0 0 8px"><em>Building AI tools that turn long documents into clear decisions.</em></p>
+  <p style="margin: 0 0 8px">
+    <a href="mailto:kaushikverma321@gmail.com"><img src="https://img.shields.io/badge/Email-kaushikverma321@gmail.com%40gmail.com-EA4335?style=flat-square&logo=gmail" alt="Email" /></a>
+    <a href="https://www.kaushikverma.com"><img src="https://img.shields.io/badge/Website-https://www.kaushikverma.com-000000?style=flat-square&logo=vercel" alt="Portfolio" /></a>
+    <a href="https://github.com/itskaushikverma"><img src="https://img.shields.io/badge/GitHub-itskaushikverma-181717?style=flat-square&logo=github" alt="GitHub" /></a>
+    <a href="https://www.linkedin.com/in/itskaushikverma"><img src="https://img.shields.io/badge/LinkedIn-https://www.linkedin.com/in/itskaushikverma-0077B5?style=flat-square&logo=linkedin" alt="LinkedIn" /></a>
+    <a href="https://x.com/SilentK68296830"><img src="https://img.shields.io/badge/Twitter-https://x.com/SilentK68296830-1DA1F2?style=flat-square&logo=twitter" alt="Twitter" /></a>
+  </p>
+  <p style="margin: 0">Open to product feedback, collaboration, and thoughtful conversation.</p>
+</div>
+<div align="center" style="margin: 8px 0 0">
+  <p style="margin: 0 0 4px">If you found this project helpful, please consider giving it a ⭐️</p>
+  <a href="https://github.com/itskaushikverma/frontend-mentor"><img src="https://img.shields.io/github/stars/itskaushikverma/frontend-mentor?style=social" alt="GitHub stars" /></a>
+</div>
 <!-- AUTHOR:END -->
