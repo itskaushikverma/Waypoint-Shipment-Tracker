@@ -35,7 +35,14 @@ function renderAuthor(data) {
     valueBadge('Portfolio', 'Website', data.portfolio, '000000', 'vercel', data.portfolio),
     valueBadge('GitHub', 'GitHub', login, '181717', 'github', data.github),
     valueBadge('LinkedIn', 'LinkedIn', data.linkedin, '0077B5', 'linkedin', data.linkedin),
-    valueBadge('Twitter', 'Twitter', data.twitter ?? data.x, '1DA1F2', 'twitter', data.twitter ?? data.x),
+    valueBadge(
+      'Twitter',
+      'Twitter',
+      data.twitter ?? data.x,
+      '1DA1F2',
+      'twitter',
+      data.twitter ?? data.x,
+    ),
   ]
     .filter(Boolean)
     .join('\n    ');
